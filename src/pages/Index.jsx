@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Flex, Input, Table, Thead, Tbody, Tr, Th, Td, Image, Text, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, Button, useDisclosure, Select, Checkbox, Stack } from "@chakra-ui/react";
 import { FaSearch, FaStar } from "react-icons/fa";
 
-const recipes = [
+const [recipes, setRecipes] = useState([
   {
     id: 1,
     brandLogo: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxicmFuZCUyMGxvZ298ZW58MHx8fHwxNzEzNTMxMzcxfDA&ixlib=rb-4.0.3&q=80&w=1080",
@@ -66,9 +66,20 @@ const recipes = [
       { user: "Dana Blue", comment: "A bit too hot for me.", rating: 78 },
     ],
   },
-];
+]);
 
 const Index = () => {
+  const addRecipe = (newRecipe) => {
+    setRecipes([...recipes, newRecipe]);
+  };
+
+  const updateRecipe = (id, updatedRecipe) => {
+    setRecipes(recipes.map((recipe) => (recipe.id === id ? updatedRecipe : recipe)));
+  };
+
+  const deleteRecipe = (id) => {
+    setRecipes(recipes.filter((recipe) => recipe.id !== id));
+  };
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [portionSize, setPortionSize] = useState("2");
@@ -86,7 +97,31 @@ const Index = () => {
   const filteredRecipes = recipes.filter((recipe) => recipe.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <Flex direction="column" p={5}>
+    <Flex direction="column" p={5} align="center">
+      <Button
+        onClick={() =>
+          addRecipe({
+            id: Math.max(...recipes.map((r) => r.id)) + 1,
+            brandLogo: "https://example.com/new-logo.jpg",
+            tags: ["New", "Tag"],
+            cookingTime: "10 mins",
+            mainIngredient: "New Ingredient",
+            rating: 50,
+            image: "https://example.com/new-image.jpg",
+            name: "New Recipe",
+            steps: ["Step 1: Do something", "Step 2: Do next"],
+            ingredients: {
+              2: ["1 new item", "2 new item"],
+              3: ["1.5 new item", "3 new item"],
+              4: ["2 new item", "4 new item"],
+              6: ["3 new item", "6 new item"],
+            },
+            comments: [{ user: "New User", comment: "A new comment.", rating: 50 }],
+          })
+        }
+      >
+        Add New Recipe
+      </Button>
       HEI HEI HEI
       <Box mb={4}>
         <Input placeholder="Search recipes (e.g., 'tags: Asian' or 'Chicken')" value={searchQuery} onChange={handleSearchChange} size="lg" rightElement={<FaSearch />} />
@@ -105,7 +140,14 @@ const Index = () => {
         </Thead>
         <Tbody>
           {filteredRecipes.map((recipe) => (
-            <Tr key={recipe.id} onClick={() => openRecipe(recipe)} cursor="pointer">
+            <Tr key={recipe.id}>
+              <Td>
+                <Button onClick={() => deleteRecipe(recipe.id)}>Delete</Button>
+                <Button onClick={() => updateRecipe(recipe.id, { ...recipe, name: "Updated Recipe" })}>Update</Button>
+              </Td>
+              <Td onClick={() => openRecipe(recipe)} cursor="pointer">
+                <Image src={recipe.image} boxSize="100px" objectFit="cover" />
+              </Td>
               <Td>
                 <Image src={recipe.image} boxSize="100px" objectFit="cover" />
               </Td>
@@ -126,7 +168,6 @@ const Index = () => {
           ))}
         </Tbody>
       </Table>
-
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
         <DrawerOverlay />
         <DrawerContent>
