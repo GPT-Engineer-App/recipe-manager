@@ -117,7 +117,7 @@ const Index = () => {
   return (
     <Flex direction="column" p={5} align="center">
       <Stack direction="row" spacing={4} align="center">
-        <Checkbox onChange={(e) => handleSelectAll(e.target.checked)} />
+        <Checkbox isChecked={selectedRecipes.length === recipes.length} onChange={(e) => handleSelectAll(e.target.checked)} />
         <Button onClick={applyBulkAction}>Add Tag "Mexico 🇲🇽" to Selected</Button>
       </Stack>
       HEI HEI HEI
@@ -140,6 +140,16 @@ const Index = () => {
           {filteredRecipes.map((recipe) => (
             <Tr key={recipe.id}>
               <Td>
+                <Checkbox
+                  isChecked={selectedRecipes.includes(recipe.id)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelectedRecipes([...selectedRecipes, recipe.id]);
+                    } else {
+                      setSelectedRecipes(selectedRecipes.filter((id) => id !== recipe.id));
+                    }
+                  }}
+                />
                 <Button onClick={() => deleteRecipe(recipe.id)}>Delete</Button>
                 <Button onClick={() => updateRecipe(recipe.id, { ...recipe, name: "Updated Recipe" })}>Update</Button>
               </Td>
