@@ -87,6 +87,7 @@ const Index = () => {
 
   return (
     <Flex direction="column" p={5}>
+      HEI HEI HEI
       <Box mb={4}>
         <Input placeholder="Search recipes (e.g., 'tags: Asian' or 'Chicken')" value={searchQuery} onChange={handleSearchChange} size="lg" rightElement={<FaSearch />} />
       </Box>
