@@ -80,6 +80,25 @@ const Index = () => {
     setRecipes(recipes.filter((recipe) => recipe.id !== id));
   };
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
+
+  const handleSelectAll = (isSelected) => {
+    if (isSelected) {
+      setSelectedRecipes(recipes.map((recipe) => recipe.id));
+    } else {
+      setSelectedRecipes([]);
+    }
+  };
+
+  const applyBulkAction = () => {
+    const updatedRecipes = recipes.map((recipe) => {
+      if (selectedRecipes.includes(recipe.id)) {
+        return { ...recipe, tags: [...recipe.tags, "Mexico 🇲🇽"] };
+      }
+      return recipe;
+    });
+    setRecipes(updatedRecipes);
+  };
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [portionSize, setPortionSize] = useState("2");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -97,30 +116,10 @@ const Index = () => {
 
   return (
     <Flex direction="column" p={5} align="center">
-      <Button
-        onClick={() =>
-          addRecipe({
-            id: Math.max(...recipes.map((r) => r.id)) + 1,
-            brandLogo: "https://example.com/new-logo.jpg",
-            tags: ["New", "Tag"],
-            cookingTime: "10 mins",
-            mainIngredient: "New Ingredient",
-            rating: 50,
-            image: "https://example.com/new-image.jpg",
-            name: "New Recipe",
-            steps: ["Step 1: Do something", "Step 2: Do next"],
-            ingredients: {
-              2: ["1 new item", "2 new item"],
-              3: ["1.5 new item", "3 new item"],
-              4: ["2 new item", "4 new item"],
-              6: ["3 new item", "6 new item"],
-            },
-            comments: [{ user: "New User", comment: "A new comment.", rating: 50 }],
-          })
-        }
-      >
-        Add New Recipe
-      </Button>
+      <Stack direction="row" spacing={4} align="center">
+        <Checkbox onChange={(e) => handleSelectAll(e.target.checked)} />
+        <Button onClick={applyBulkAction}>Add Tag "Mexico 🇲🇽" to Selected</Button>
+      </Stack>
       HEI HEI HEI
       <Box mb={4}>
         <Input placeholder="Search recipes (e.g., 'tags: Asian' or 'Chicken')" value={searchQuery} onChange={handleSearchChange} size="lg" rightElement={<FaSearch />} />
@@ -144,11 +143,8 @@ const Index = () => {
                 <Button onClick={() => deleteRecipe(recipe.id)}>Delete</Button>
                 <Button onClick={() => updateRecipe(recipe.id, { ...recipe, name: "Updated Recipe" })}>Update</Button>
               </Td>
-              <Td onClick={() => openRecipe(recipe)} cursor="pointer">
-                <Image src={recipe.image} boxSize="100px" objectFit="cover" />
-              </Td>
               <Td>
-                <Image src={recipe.image} boxSize="100px" objectFit="cover" />
+                <Image src={recipe.image} boxSize="100px" objectFit="cover" onClick={() => openRecipe(recipe)} cursor="pointer" />
               </Td>
               <Td>{recipe.id}</Td>
               <Td>
