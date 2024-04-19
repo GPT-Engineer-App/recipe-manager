@@ -24,7 +24,48 @@ const recipes = [
       { user: "John Smith", comment: "Too spicy for my taste.", rating: 70 },
     ],
   },
-  // More recipes...
+  {
+    id: 2,
+    brandLogo: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxicmFuZCUyMGxvZ298ZW58MHx8fHwxNzEzNTMxMzcxfDA&ixlib=rb-4.0.3&q=80&w=1080",
+    tags: ["vegetarian", "Italian", "Quick"],
+    cookingTime: "15 mins",
+    mainIngredient: "Pasta",
+    rating: 90,
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxwYXN0YSUyMGRpc2h8ZW58MHx8fHwxNzEzNTMxMzcxfDA&ixlib=rb-4.0.3&q=80&w=1080",
+    name: "Quick Italian Pasta",
+    steps: ["Step 1: Boil the pasta", "Step 2: Prepare the sauce", "Step 3: Mix and serve"],
+    ingredients: {
+      2: ["200g pasta", "100g tomato sauce"],
+      3: ["300g pasta", "150g tomato sauce"],
+      4: ["400g pasta", "200g tomato sauce"],
+      6: ["600g pasta", "300g tomato sauce"],
+    },
+    comments: [
+      { user: "Alice Brown", comment: "Very easy and quick!", rating: 95 },
+      { user: "Bob White", comment: "Needs more seasoning.", rating: 85 },
+    ],
+  },
+  {
+    id: 3,
+    brandLogo: "https://images.unsplash.com/photo-1620288627223-53302f4e8c74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxicmFuZCUyMGxvZ298ZW58MHx8fHwxNzEzNTMxMzcxfDA&ixlib=rb-4.0.3&q=80&w=1080",
+    tags: ["vegan", "Mexican", "Spicy"],
+    cookingTime: "25 mins",
+    mainIngredient: "Beans",
+    rating: 88,
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxiZWFucyUyMGRpc2h8ZW58MHx8fHwxNzEzNTMxMzcxfDA&ixlib=rb-4.0.3&q=80&w=1080",
+    name: "Spicy Vegan Tacos",
+    steps: ["Step 1: Prepare the beans", "Step 2: Make the salsa", "Step 3: Assemble the tacos"],
+    ingredients: {
+      2: ["1 can beans", "2 tbsp salsa", "4 taco shells"],
+      3: ["1.5 cans beans", "3 tbsp salsa", "6 taco shells"],
+      4: ["2 cans beans", "4 tbsp salsa", "8 taco shells"],
+      6: ["3 cans beans", "6 tbsp salsa", "12 taco shells"],
+    },
+    comments: [
+      { user: "Charlie Green", comment: "Delicious and fiery!", rating: 92 },
+      { user: "Dana Blue", comment: "A bit too hot for me.", rating: 78 },
+    ],
+  },
 ];
 
 const Index = () => {
